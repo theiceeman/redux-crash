@@ -1,24 +1,21 @@
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { createPost } from "../actions/postActions";
 
 const PostForm = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const dispatch = useDispatch()
 
   let Submit = (e) => {
     e.preventDefault();
-    let post = {
+    let postData = {
       title,
       body,
     };
-    fetch("https://jsonplaceholder.typicode.com/posts", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(post),
-    })
-    .then((res) => res.json())
-    .then(data => console.log(data));
+
+    dispatch(createPost(postData))
+
   };
 
   return (
